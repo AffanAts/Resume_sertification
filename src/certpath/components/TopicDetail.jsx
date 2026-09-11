@@ -17,7 +17,7 @@ const STATUS_OPTIONS = [
   { key: 'done', label: 'Selesai' },
 ]
 
-export default function TopicDetail({ state, setTopicStatus, setTopicNotes, recordQuizResult }) {
+export default function TopicDetail({ state, setTopicStatus, setTopicNotes, recordQuizResult, recordAnswer }) {
   const { topicId } = useParams()
   const navigate = useNavigate()
   const [tab, setTab] = useState('summary')
@@ -110,7 +110,12 @@ export default function TopicDetail({ state, setTopicStatus, setTopicNotes, reco
       )}
 
       {tab === 'quiz' && (
-        <QuizPanel key={topic.id} topic={topic} onFinish={(score, total) => recordQuizResult(topic.id, score, total)} />
+        <QuizPanel
+          key={topic.id}
+          topic={topic}
+          onAnswer={(questionText, wasCorrect) => recordAnswer(topic.id, questionText, wasCorrect)}
+          onFinish={(score, total) => recordQuizResult(topic.id, score, total)}
+        />
       )}
 
       {tab === 'progress' && (

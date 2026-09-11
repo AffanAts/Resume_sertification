@@ -262,6 +262,100 @@
   color: var(--cp-success);
 }
 
+.cp-review-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius);
+  padding: 16px 18px;
+  margin-bottom: 20px;
+}
+.cp-review-banner.cp-has-due {
+  border-color: var(--cp-accent);
+  background: linear-gradient(to right, var(--cp-accent-soft), var(--cp-surface) 55%);
+}
+.cp-review-banner-main {
+  flex: 1;
+  min-width: 200px;
+}
+.cp-review-banner-title {
+  font-family: var(--cp-mono);
+  font-weight: 700;
+  font-size: 0.98rem;
+}
+.cp-review-banner-sub {
+  font-size: 0.8rem;
+  color: var(--cp-muted);
+  margin-top: 3px;
+}
+.cp-streak {
+  text-align: center;
+  flex: none;
+  padding-inline: 4px;
+}
+.cp-streak-num {
+  font-family: var(--cp-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cp-accent);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.cp-streak-lbl {
+  font-size: 0.66rem;
+  color: var(--cp-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 3px;
+}
+
+.cp-review-head {
+  margin-bottom: 16px;
+}
+.cp-review-progress {
+  font-family: var(--cp-mono);
+  font-size: 0.78rem;
+  color: var(--cp-muted);
+  margin-bottom: 8px;
+}
+.cp-review-bar {
+  height: 5px;
+}
+.cp-review-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1px;
+  background: var(--cp-border);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.cp-box-tag {
+  font-family: var(--cp-mono);
+  font-size: 0.62rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--cp-surface-2);
+  color: var(--cp-muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.cp-quiz-meta a {
+  color: var(--cp-accent);
+  text-decoration: none;
+}
+.cp-quiz-meta a:hover {
+  text-decoration: underline;
+}
+.cp-btn-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
 .cp-section-label {
   font-family: var(--cp-mono);
   font-size: 0.72rem;
@@ -537,6 +631,10 @@
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 .cp-quiz-q {
   font-weight: 600;
@@ -625,6 +723,10 @@
   background: var(--cp-accent);
   border-color: var(--cp-accent);
   color: #1a0e08;
+}
+.cp-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
 }
 
 .cp-progress-panel {

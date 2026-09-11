@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function QuizPanel({ topic, onFinish }) {
+export default function QuizPanel({ topic, onAnswer, onFinish }) {
   const [answers, setAnswers] = useState(() => topic.quiz.map(() => null))
 
   if (!topic.quiz || topic.quiz.length === 0) {
@@ -16,6 +16,9 @@ export default function QuizPanel({ topic, onFinish }) {
     const next = [...answers]
     next[questionIndex] = optionIndex
     setAnswers(next)
+
+    const question = topic.quiz[questionIndex]
+    onAnswer(question.q, optionIndex === question.correct)
 
     const nextAllDone = next.every((a) => a !== null)
     if (nextAllDone) {

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { CNSP_TOPICS } from '../data/topics'
+import { buildDueQueue } from '../lib/srs'
 
 export default function CnspDashboard({ state }) {
   const navigate = useNavigate()
@@ -8,12 +9,39 @@ export default function CnspDashboard({ state }) {
   const done = CNSP_TOPICS.filter((t) => state.status[t.id] === 'done').length
   const mid = CNSP_TOPICS.filter((t) => state.status[t.id] === 'mid').length
   const todo = total - done - mid
+  const dueCount = buildDueQueue(CNSP_TOPICS, state.srs).length
 
   return (
     <section>
       <div className="cp-hero">
         <h1>CNSP — Certified Network Security Practitioner</h1>
         <p>The SecOps Group · fokus network security fundamentals &amp; practical testing. Silabus resmi, 17 domain.</p>
+      </div>
+
+      <div className={`cp-review-banner ${dueCount > 0 ? 'cp-has-due' : ''}`}>
+        <div className="cp-review-banner-main">
+          <div className="cp-review-banner-title">
+            {dueCount > 0 ? `${dueCount} soal siap direview` : 'Belum ada soal jatuh tempo'}
+          </div>
+          <div className="cp-review-banner-sub">
+            {dueCount > 0
+              ? 'Soal dari semua topik dicampur — cara paling efektif menjaga ingatan.'
+              : 'Kerjakan kuis di topik mana pun untuk memasukkan soalnya ke jadwal review.'}
+          </div>
+        </div>
+        {state.streak > 0 && (
+          <div className="cp-streak">
+            <div className="cp-streak-num">{state.streak}</div>
+            <div className="cp-streak-lbl">hari berturut</div>
+          </div>
+        )}
+        <button
+          className="cp-btn cp-primary"
+          disabled={dueCount === 0}
+          onClick={() => navigate('/certpath/cnsp/review')}
+        >
+          Mulai review
+        </button>
       </div>
 
       <div className="cp-stat-strip">

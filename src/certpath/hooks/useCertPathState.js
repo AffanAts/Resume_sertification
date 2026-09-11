@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { cardKey, nextCardState, nextStreak, todayKey } from '../lib/srs'
 
 const STORAGE_KEY = 'certpath_state'
 
@@ -6,6 +7,9 @@ const DEFAULT_STATE = {
   status: {}, // topicId -> 'todo' | 'mid' | 'done'
   notes: {}, // topicId -> string
   quizBest: {}, // topicId -> { score, total }
+  srs: {}, // cardKey -> { box, due }
+  streak: 0,
+  lastStudyDate: null,
 }
 
 function loadState() {
@@ -54,5 +58,18 @@ export function useCertPathState() {
     })
   }, [])
 
-  return { state, setTopicStatus, setTopicNotes, recordQuizResult }
+  const recordAnswer = useCallback((topicId, questionText, wasCorrect) => {
+    setState((prev) => {
+      const key = cardKey(topicId, questionText)
+      const today = todayKey()
+      return {
+        ...prev,
+        srs: { ...prev.srs, [key]: nextCardState(prev.srs[key], wasCorrect) },
+        streak: nextStreak(prev.lastStudyDate, prev.streak, today),
+        lastStudyDate: today,
+      }
+    })
+  }, [])
+
+  return { state, setTopicStatus, setTopicNotes, recordQuizResult, recordAnswer }
 }

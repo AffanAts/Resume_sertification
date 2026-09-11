@@ -4,6 +4,7 @@ import { getTopic } from './data/topics'
 import CertList from './components/CertList'
 import CnspDashboard from './components/CnspDashboard'
 import TopicDetail from './components/TopicDetail'
+import ReviewSession from './components/ReviewSession'
 import './certpath.css'
 
 function TopicCrumb() {
@@ -29,6 +30,18 @@ function Breadcrumbs() {
           }
         />
         <Route
+          path="/cnsp/review"
+          element={
+            <>
+              <Link to="/certpath">Sertifikasi</Link>
+              <span className="cp-sep">/</span>
+              <Link to="/certpath/cnsp">CNSP</Link>
+              <span className="cp-sep">/</span>
+              <span className="cp-current">Review</span>
+            </>
+          }
+        />
+        <Route
           path="/cnsp/:topicId"
           element={
             <>
@@ -46,7 +59,7 @@ function Breadcrumbs() {
 }
 
 export default function CertPath() {
-  const { state, setTopicStatus, setTopicNotes, recordQuizResult } = useCertPathState()
+  const { state, setTopicStatus, setTopicNotes, recordQuizResult, recordAnswer } = useCertPathState()
 
   return (
     <div className="cp-root">
@@ -62,6 +75,7 @@ export default function CertPath() {
         <Routes>
           <Route path="/" element={<CertList state={state} />} />
           <Route path="/cnsp" element={<CnspDashboard state={state} />} />
+          <Route path="/cnsp/review" element={<ReviewSession state={state} recordAnswer={recordAnswer} />} />
           <Route
             path="/cnsp/:topicId"
             element={
@@ -70,6 +84,7 @@ export default function CertPath() {
                 setTopicStatus={setTopicStatus}
                 setTopicNotes={setTopicNotes}
                 recordQuizResult={recordQuizResult}
+                recordAnswer={recordAnswer}
               />
             }
           />
