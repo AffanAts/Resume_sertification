@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getTopic } from '../data/topics'
 import QuizPanel from './QuizPanel'
+import { DIAGRAMS } from './diagrams'
 
 const TABS = [
   { key: 'summary', label: 'Ringkasan' },
@@ -68,19 +69,23 @@ export default function TopicDetail({ state, setTopicStatus, setTopicNotes, reco
           {topic.summary.length === 0 ? (
             <div className="cp-placeholder-card">Ringkasan untuk topik ini belum ditulis.</div>
           ) : (
-            topic.summary.map((block, i) => (
-              <div key={i}>
-                <h3>{block.heading}</h3>
-                <ul>
-                  {block.items.map((item, j) => (
-                    <li key={j} dangerouslySetInnerHTML={{ __html: item }} />
-                  ))}
-                </ul>
-                {block.callout && (
-                  <div className="cp-callout" dangerouslySetInnerHTML={{ __html: `<b>Ingat:</b> ${block.callout}` }} />
-                )}
-              </div>
-            ))
+            topic.summary.map((block, i) => {
+              const Diagram = block.diagram ? DIAGRAMS[block.diagram] : null
+              return (
+                <div key={i}>
+                  <h3>{block.heading}</h3>
+                  {Diagram && <Diagram />}
+                  <ul>
+                    {block.items.map((item, j) => (
+                      <li key={j} dangerouslySetInnerHTML={{ __html: item }} />
+                    ))}
+                  </ul>
+                  {block.callout && (
+                    <div className="cp-callout" dangerouslySetInnerHTML={{ __html: `<b>Ingat:</b> ${block.callout}` }} />
+                  )}
+                </div>
+              )
+            })
           )}
         </div>
       )}
@@ -105,7 +110,7 @@ export default function TopicDetail({ state, setTopicStatus, setTopicNotes, reco
       )}
 
       {tab === 'quiz' && (
-        <QuizPanel topic={topic} onFinish={(score, total) => recordQuizResult(topic.id, score, total)} />
+        <QuizPanel key={topic.id} topic={topic} onFinish={(score, total) => recordQuizResult(topic.id, score, total)} />
       )}
 
       {tab === 'progress' && (

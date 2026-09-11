@@ -475,6 +475,29 @@
   color: var(--cp-accent);
 }
 
+.cp-figure {
+  margin: 4px 0 18px;
+  padding: 14px;
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--cp-radius);
+  overflow-x: auto;
+}
+.cp-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 620px;
+  margin: 0 auto;
+  color: var(--cp-text);
+}
+.cp-figure figcaption {
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: var(--cp-muted);
+  line-height: 1.5;
+}
+
 .cp-cheat-table {
   width: 100%;
   border-collapse: collapse;

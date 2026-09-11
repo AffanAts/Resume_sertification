@@ -1,11 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export default function QuizPanel({ topic, onFinish }) {
   const [answers, setAnswers] = useState(() => topic.quiz.map(() => null))
-
-  useEffect(() => {
-    setAnswers(topic.quiz.map(() => null))
-  }, [topic.id, topic.quiz])
 
   if (!topic.quiz || topic.quiz.length === 0) {
     return <div className="cp-placeholder-card">Belum ada contoh soal untuk topik ini.</div>
